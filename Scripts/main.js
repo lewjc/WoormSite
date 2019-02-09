@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
 	navModule.init();
 	mainModule.siteInit();
 });
@@ -53,22 +53,34 @@ var navModule = (() => {
 	let _currentSelection;
 
 	function init() {
+		var elems = document.querySelectorAll('.dropdown-trigger');
+		M.Dropdown.init(elems, {
+			gutter: 0, // Spacing from edge
+			belowOrigin: false, // Displays dropdown below the button
+			alignment: 'left', // Displays dropdown with edge aligned to the left of button
+			container: "body",
+			constrainWidth: false,
+			onOpenStart: () => { document.getElementById("menu-dropdown").style.marginTop = "20px"; }
+		});
 		initEvents();
 	}
 
 	function initEvents() {
-		const portfolioButton = document.getElementById("portfolio-btn");
-		portfolioButton.addEventListener("click", () =>
-			navChangeClick(portfolioButton, _navOptions.Portfolio.link, portfolioModule.init)
-		);
-		const aboutButton = document.getElementById("about-btn");
-		aboutButton.addEventListener("click", () =>
-			navChangeClick(aboutButton, _navOptions.About.link)
-		);
-		const contactButton = document.getElementById("contact-btn");
-		contactButton.addEventListener("click", () =>
-			navChangeClick(contactButton, _navOptions.Contact.link)
-		);
+		const portfolioButtons = document.querySelectorAll("#portfolio-btn");
+		portfolioButtons.forEach(button => button.addEventListener("click", () =>
+			navChangeClick(button, _navOptions.Portfolio.link, portfolioModule.init)));
+
+		const aboutButtons = document.querySelectorAll("#about-btn");
+		aboutButtons.forEach(button => button.addEventListener("click", () =>
+			navChangeClick(button, _navOptions.About.link)));
+
+		const contactButtons = document.querySelectorAll("#contact-btn");
+		contactButtons.forEach(button => button.addEventListener("click", () =>
+			navChangeClick(button, _navOptions.Contact.link)));
+	}
+
+	function burgerMenuEvents() {
+		let _isOpen = false;
 		const burgerMenu = document.getElementById("burger-menu");
 		burgerMenu.addEventListener("click", () => {
 			// We need to show the menu for the user to navigate.
@@ -90,7 +102,7 @@ var navModule = (() => {
 	function loadMainContent(contentName, pageLoadCallback) {
 		var request = new XMLHttpRequest();
 		request.open("GET", `../Pages/${contentName}`, true);
-		request.onload = function() {
+		request.onload = function () {
 			let pageLoad = new Promise((resolve, reject) => {
 				if (request.status >= 200 && request.status < 400) {
 					var resp = request.responseText;
@@ -139,10 +151,22 @@ var portfolioModule = (() => {
 				fitWidth: true,
 				gutter: 5
 			});
-		}, 250);
+		}, 50);
 	}
 
 	return {
 		init
 	};
+})();
+
+/* ============ ABOUT MODULE ============== */
+var aboutModule = (() => {
+
+	function init() {
+
+	}
+
+	return {
+		init
+	}
 })();

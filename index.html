@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Wooorm.co.uk</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="stylesheet" type="text/css" media="screen" href="/Styles/main.css" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
@@ -19,7 +19,7 @@
       <div id="main-image">
         <div class="row">
           <div class="col s12 center-align">
-            <img id="header-image" src="/Images/wormmain.jpg" class="circle z-depth-2" alt="Wooorm Main">
+            <img id="header-image" src="/Images/wormmain.jpg" class="circle z-depth-3" alt="Wooorm Main">
           </div>
         </div>
       </div>
@@ -29,33 +29,40 @@
         </h4>
       </div>
       <div class="row" id="nav-button-row">
-        <div class="col s6 m4 l4 center-align">
-          <a href="#!" id="portfolio-btn" class="center-align">
+        <div class="col s4 m4 l4 center-align">
+          <a href="#!" id="portfolio-btn" class="c  enter-align">
             <h6 id="portfolio-txt">Portfolio</h5>
           </a>
         </div>
-        <div class="col s6 m4 l4 center-align">
+        <div class="col s4 m4 l4 center-align">
           <a href="#!" id="about-btn" class="center-align">
             <h6 id="about-txt">About</h5>
           </a>
         </div>
-        <div class="col s6 m4 l4 center-align">
+        <div class="col s4 m4 l4 center-align">
           <a href="#!" id="contact-btn" class="center-align">
             <h6 id="contact-txt">Contact</h5>
           </a>
         </div>
       </div>
     </div>
-
   </div>
   <div id="content" class="container">
     <div id="page-content">
     </div>
-    <div id="burger-menu-container">
+    <div id="burger-menu-container" style="height: 100%">
       <div class="fixed-action-btn direction-top active" style="bottom: 45px; right: 24px;">
-        <a id="burger-menu" class="btn btn-floating btn-large black waves-effect waves-light" id="burger-menu">
+        <a id="burger-menu" class="btn btn-floating btn-large black waves-effect waves-light dropdown-trigger" id="burger-menu"
+          data-target="menu-dropdown">
           <i class="material-icons">menu</i>
         </a>
+       <!-- Dropdown Structure -->
+  <ul id='menu-dropdown' class='dropdown-content'>
+      <li><a id="portfolio-btn"href="#!">Portfolio
+      </a></li>
+      <li><a id="about-btn" href="#!">About</a></li>
+      <li><a href="#!">Contact</a></li>
+    </ul>
       </div>
     </div>
   </div>

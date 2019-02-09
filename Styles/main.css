@@ -7,7 +7,7 @@
 }
 
 #nav-button-row>div>a {
-  color: #696969;
+  color: #a5a5a5;
   font-weight: 700;
 }
 
@@ -28,6 +28,7 @@
   .grid-item--width2 {
     width: 90px;
   }
+
 }
 
 @media screen and (min-width: 480px) {
@@ -51,8 +52,18 @@
 .grid-item--width2 {
   width: 280px;
 }
-
 .ting {
-  right: 2%;
-  margin-top: 9px;
+  margin-top: 20px;
+}
+
+#menu-dropdown{
+  background-color: black;
+  position: fixed;
+  border-radius: 10px;
+}
+#menu-dropdown>li>a{
+  color: white;
+}
+#menu-dropdown>li>a:focus{
+  background-color: grey;
 }
