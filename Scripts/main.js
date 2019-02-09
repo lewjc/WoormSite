@@ -107,6 +107,7 @@ var navModule = (() => {
 				if (request.status >= 200 && request.status < 400) {
 					var resp = request.responseText;
 					document.querySelector("#page-content").innerHTML = resp;
+					console.log(resp);
 					resolve();
 				} else {
 					reject();
