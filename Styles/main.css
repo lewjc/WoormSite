@@ -1,0 +1,58 @@
+#header-image {
+  margin-top: 2%;
+}
+
+#portfolio-btn {
+  width: 70%;
+}
+
+#nav-button-row>div>a {
+  color: #696969;
+  font-weight: 700;
+}
+
+.nav-selected>h6 {
+  color: black;
+  text-decoration: underline;
+}
+
+@media screen and (min-width: 320px) and (max-width: 480px) {
+  #burger-menu-container {
+    display: block;
+  }
+
+  #nav-button-row {
+    display: none;
+  }
+
+  .grid-item--width2 {
+    width: 90px;
+  }
+}
+
+@media screen and (min-width: 480px) {
+  #burger-menu-container {
+    display: none;
+  }
+}
+
+.gallery {
+  margin: 0 auto;
+}
+
+/* clearfix */
+.gallery:after {
+  display: block;
+  clear: both;
+}
+
+/* ---- grid-item ---- */
+
+.grid-item--width2 {
+  width: 280px;
+}
+
+.ting {
+  right: 2%;
+  margin-top: 9px;
+}
