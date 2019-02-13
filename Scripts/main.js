@@ -31,10 +31,8 @@ var mainModule = (() => {
 	}
 
 	function hideLoader() {
-		console.info("Hiding Loader");
 		const loaderPlaceholder = document.getElementById("loader-placeholder");
-		loaderPlaceholder.setAttribute("hidden", "hidden")
-
+		loaderPlaceholder.setAttribute("hidden", "hidden");
 	}
 
 	function showLoader() {
@@ -69,30 +67,46 @@ var navModule = (() => {
 	let _currentSelection;
 
 	function init() {
-		var elems = document.querySelectorAll('.dropdown-trigger');
+		var elems = document.querySelectorAll(".dropdown-trigger");
 		M.Dropdown.init(elems, {
 			gutter: 0, // Spacing from edge
 			belowOrigin: false, // Displays dropdown below the button
-			alignment: 'left', // Displays dropdown with edge aligned to the left of button
+			alignment: "left", // Displays dropdown with edge aligned to the left of button
 			container: "body",
 			constrainWidth: false,
-			onOpenStart: () => { document.getElementById("menu-dropdown").style.marginTop = "20px"; }
+			onOpenStart: () => {
+				document.getElementById("menu-dropdown").style.marginTop = "20px";
+			}
 		});
 		initEvents();
 	}
 
 	function initEvents() {
 		const portfolioButtons = document.querySelectorAll("#portfolio-btn");
-		portfolioButtons.forEach(button => button.addEventListener("click", () =>
-			navChangeClick(button, _navOptions.Portfolio.link, _navOptions.Portfolio.buttonId, portfolioModule.init)));
+		portfolioButtons.forEach(button =>
+			button.addEventListener("click", () =>
+				navChangeClick(
+					button,
+					_navOptions.Portfolio.link,
+					_navOptions.Portfolio.buttonId,
+					portfolioModule.init
+				)
+			)
+		);
 
 		const aboutButtons = document.querySelectorAll("#about-btn");
-		aboutButtons.forEach(button => button.addEventListener("click", () =>
-			navChangeClick(button, _navOptions.About.link, _navOptions.About.buttonId)));
+		aboutButtons.forEach(button =>
+			button.addEventListener("click", () =>
+				navChangeClick(button, _navOptions.About.link, _navOptions.About.buttonId, aboutModule.init)
+			)
+		);
 
 		const contactButtons = document.querySelectorAll("#contact-btn");
-		contactButtons.forEach(button => button.addEventListener("click", () =>
-			navChangeClick(button, _navOptions.Contact.link, _navOptions.Contact.buttonId)));
+		contactButtons.forEach(button =>
+			button.addEventListener("click", () =>
+				navChangeClick(button, _navOptions.Contact.link, _navOptions.Contact.buttonId)
+			)
+		);
 	}
 
 	function burgerMenuEvents() {
@@ -156,18 +170,20 @@ var portfolioModule = (() => {
 	 */
 	function init() {
 		const elems = document.querySelectorAll(".materialboxed");
-		M.Materialbox.init(elems);
+		M.Materialbox.init(elems), {
+			inDuration: 100
+		};
 		// init with element
 		setTimeout(() => {
 			const gallery = document.querySelector(".gallery");
 			const msnry = new Masonry(gallery, {
 				itemSelector: ".grid-item",
 				fitWidth: true,
-				gutter: 5,
+				gutter: 5
 			});
-			msnry.on("layoutComplete", mainModule.hideLoader)
+			msnry.on("layoutComplete", mainModule.hideLoader);
 			msnry.layout();
-		}, 350)
+		}, 500);
 		// here is where we hide the selector
 	}
 
@@ -178,12 +194,54 @@ var portfolioModule = (() => {
 
 /* ============ ABOUT MODULE ============== */
 var aboutModule = (() => {
+	async function init() {
+		const payload = await fetch("./Site/info.json").then(siteInfo => {
+			return siteInfo.json();
+		}).then(data => {
+			let url = data.instagram_api_url;
+			const accessToken = data.access_token;
+			url += accessToken;
+			url += "&count=20";
+			return fetch(url);
+		}).then(response => {
+			return response.json();
+		});
+		initInstagramCarousel(payload);
+	}
 
-	function init() {
+	function initInstagramCarousel(payload) {
+		const carouselContainer = document.getElementById("instagram-carousel");
+		payload.data.forEach(payloadObject => {
+			const imageUrl = payloadObject.images.standard_resolution.url;
+			const link = (payloadObject.link)
+			let newMember = createCarouselMember(imageUrl, link);
+			carouselContainer.appendChild(newMember)
+		});
+		const elems = document.querySelectorAll('.carousel');
+		M.Carousel.init(elems, {
+			// onCycleTo: updateCarouselInfo,
+			numVisible: 5,
+			indicators: true
+		});
+		mainModule.hideLoader();
+	}
 
+	function updateCarouselInfo(currentSelection) {
+		const descriptionPlaceholder = document.getElementById("instagram-description");
+		descriptionPlaceholder.textContent = currentSelection.childNodes[0].getAttribute("data-desc")
+	}
+
+	function createCarouselMember(imageUrl, link) {
+		const carouselMember = document.createElement("a");
+		carouselMember.classList.add("carousel-item");
+		carouselMember.setAttribute("href", link);
+		const image = document.createElement("img");
+		image.setAttribute("src", imageUrl);
+		carouselMember.appendChild(image);
+		return carouselMember;
 	}
 
 	return {
 		init
-	}
+	};
 })();
