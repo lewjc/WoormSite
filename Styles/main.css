@@ -1,3 +1,7 @@
+*{
+  font-family: 'Archivo', sans-serif;
+}
+
 #header-image {
   margin-top: 2%;
 }
@@ -50,7 +54,7 @@
 /* ---- grid-item ---- */
 
 .grid-item--width2 {
-  width: 280px;
+  width: 250px;
 }
 .ting {
   margin-top: 20px;
@@ -66,4 +70,8 @@
 }
 #menu-dropdown>li>a:focus{
   background-color: grey;
+}
+
+#social-media-links > a>i{
+color: black;
 }

@@ -7,7 +7,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 var mainModule = (() => {
 	function siteInit() {
-		if (getCookie("navOption")) {
+		const cookie = getCookie("navOption");
+		if (cookie) {
+			// Gets where the user is previously clicked and sets that page to the currently selected one.
+			const previousButtonId = cookie.split("=")[1];
+			document.querySelector(previousButtonId).click();
 		} else {
 			document.getElementById("portfolio-btn").click();
 		}
@@ -19,16 +23,28 @@ var mainModule = (() => {
 				return item;
 			}
 		});
-
-		if (navOption) {
-			console.log(navOption);
+		if (navOption && navOption.length > 0) {
+			return navOption[0];
 		} else {
 			return null;
 		}
 	}
 
+	function hideLoader() {
+		console.info("Hiding Loader");
+		const loaderPlaceholder = document.getElementById("loader-placeholder");
+		loaderPlaceholder.setAttribute("hidden", "hidden")
+
+	}
+
+	function showLoader() {
+		const loaderPlaceholder = document.getElementById("loader-placeholder");
+		loaderPlaceholder.removeAttribute("hidden");
+	}
 	return {
-		siteInit
+		siteInit,
+		hideLoader,
+		showLoader
 	};
 })();
 
@@ -68,15 +84,15 @@ var navModule = (() => {
 	function initEvents() {
 		const portfolioButtons = document.querySelectorAll("#portfolio-btn");
 		portfolioButtons.forEach(button => button.addEventListener("click", () =>
-			navChangeClick(button, _navOptions.Portfolio.link, portfolioModule.init)));
+			navChangeClick(button, _navOptions.Portfolio.link, _navOptions.Portfolio.buttonId, portfolioModule.init)));
 
 		const aboutButtons = document.querySelectorAll("#about-btn");
 		aboutButtons.forEach(button => button.addEventListener("click", () =>
-			navChangeClick(button, _navOptions.About.link)));
+			navChangeClick(button, _navOptions.About.link, _navOptions.About.buttonId)));
 
 		const contactButtons = document.querySelectorAll("#contact-btn");
 		contactButtons.forEach(button => button.addEventListener("click", () =>
-			navChangeClick(button, _navOptions.Contact.link)));
+			navChangeClick(button, _navOptions.Contact.link, _navOptions.Contact.buttonId)));
 	}
 
 	function burgerMenuEvents() {
@@ -87,8 +103,10 @@ var navModule = (() => {
 		});
 	}
 
-	function navChangeClick(button, fileLink, pageLoadCallback) {
-		document.querySelector("#page-content").innerHTML = loaderHTML;
+	function navChangeClick(button, fileLink, buttonId, pageLoadCallback) {
+		// Here we are setting the loader.
+		mainModule.showLoader();
+		document.cookie = "navOption=" + buttonId;
 		setTimeout(() => {
 			if (_currentSelection) {
 				_currentSelection.classList.remove("nav-selected");
@@ -107,7 +125,6 @@ var navModule = (() => {
 				if (request.status >= 200 && request.status < 400) {
 					var resp = request.responseText;
 					document.querySelector("#page-content").innerHTML = resp;
-					console.log(resp);
 					resolve();
 				} else {
 					reject();
@@ -116,18 +133,14 @@ var navModule = (() => {
 			pageLoad.then(() => {
 				if (pageLoadCallback) {
 					pageLoadCallback();
+				} else {
+					mainModule.hideLoader();
 				}
 			});
 		};
 
 		request.send();
 	}
-
-	const loaderHTML =
-		'<div class="row center-align" style="margin-top:100px"><div class="preloader-wrapper big active"> <div class="spinner-layer spinner-blue"> <div class="circle-clipper left">' +
-		'<div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right">' +
-		'<div class="circle"></div></div></div></div>';
-
 	return {
 		init,
 		getNavOptions: () => _navOptions
@@ -147,12 +160,15 @@ var portfolioModule = (() => {
 		// init with element
 		setTimeout(() => {
 			const gallery = document.querySelector(".gallery");
-			var msnry = new Masonry(gallery, {
+			const msnry = new Masonry(gallery, {
 				itemSelector: ".grid-item",
 				fitWidth: true,
-				gutter: 5
+				gutter: 5,
 			});
-		}, 50);
+			msnry.on("layoutComplete", mainModule.hideLoader)
+			msnry.layout();
+		}, 350)
+		// here is where we hide the selector
 	}
 
 	return {

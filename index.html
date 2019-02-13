@@ -10,6 +10,9 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
     media="screen,projection" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+    crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Archivo" rel="stylesheet">
 </head>
 
 <body>
@@ -23,10 +26,13 @@
           </div>
         </div>
       </div>
-      <div id="main-header" class="row">
+      <div id="main-header" class="row center-align">
         <h4 class="center-align">
           The Artwork of Joseph Barker
         </h4>
+        <img src="./Images/social-1_logo-instagram.svg" />
+        &nbsp;
+        <img src="./Images/social-1_logo-facebook.svg" />
       </div>
       <div class="row" id="nav-button-row">
         <div class="col s4 m4 l4 center-align">
@@ -48,6 +54,23 @@
     </div>
   </div>
   <div id="content" class="container">
+    <div id="loader-placeholder" hidden>
+      <div class="row center-align" style="margin-top:100px; height: 9999px; z-index: 2;">
+        <div class="preloader-wrapper big active">
+          <div class="spinner-layer spinner-blue">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+              <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div id="page-content">
     </div>
     <div id="burger-menu-container" style="height: 100%">
@@ -56,13 +79,13 @@
           data-target="menu-dropdown">
           <i class="material-icons">menu</i>
         </a>
-       <!-- Dropdown Structure -->
-  <ul id='menu-dropdown' class='dropdown-content'>
-      <li><a id="portfolio-btn"href="#!">Portfolio
-      </a></li>
-      <li><a id="about-btn" href="#!">About</a></li>
-      <li><a href="#!">Contact</a></li>
-    </ul>
+        <!-- Dropdown Structure -->
+        <ul id='menu-dropdown' class='dropdown-content'>
+          <li><a id="portfolio-btn" href="#!">Portfolio
+            </a></li>
+          <li><a id="about-btn" href="#!">About</a></li>
+          <li><a href="#!">Contact</a></li>
+        </ul>
       </div>
     </div>
   </div>
