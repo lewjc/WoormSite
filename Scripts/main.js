@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
 	navModule.init();
 	mainModule.siteInit();
 });
@@ -134,7 +134,7 @@ var navModule = (() => {
 	function loadMainContent(contentName, pageLoadCallback) {
 		var request = new XMLHttpRequest();
 		request.open("GET", `../Pages/${contentName}`, true);
-		request.onload = function () {
+		request.onload = function() {
 			let pageLoad = new Promise((resolve, reject) => {
 				if (request.status >= 200 && request.status < 400) {
 					var resp = request.responseText;
@@ -170,16 +170,17 @@ var portfolioModule = (() => {
 	 */
 	function init() {
 		const elems = document.querySelectorAll(".materialboxed");
-		M.Materialbox.init(elems), {
-			inDuration: 100
-		};
+		M.Materialbox.init(elems),
+			{
+				inDuration: 100
+			};
 		// init with element
 		setTimeout(() => {
 			const gallery = document.querySelector(".gallery");
 			const msnry = new Masonry(gallery, {
 				itemSelector: ".grid-item",
 				fitWidth: true,
-				gutter: 5
+				gutter: 10
 			});
 			msnry.on("layoutComplete", mainModule.hideLoader);
 			msnry.layout();
@@ -195,17 +196,20 @@ var portfolioModule = (() => {
 /* ============ ABOUT MODULE ============== */
 var aboutModule = (() => {
 	async function init() {
-		const payload = await fetch("./Site/info.json").then(siteInfo => {
-			return siteInfo.json();
-		}).then(data => {
-			let url = data.instagram_api_url;
-			const accessToken = data.access_token;
-			url += accessToken;
-			url += "&count=20";
-			return fetch(url);
-		}).then(response => {
-			return response.json();
-		});
+		const payload = await fetch("./Site/info.json")
+			.then(siteInfo => {
+				return siteInfo.json();
+			})
+			.then(data => {
+				let url = data.instagram_api_url;
+				const accessToken = data.access_token;
+				url += accessToken;
+				url += "&count=20";
+				return fetch(url);
+			})
+			.then(response => {
+				return response.json();
+			});
 		initInstagramCarousel(payload);
 	}
 
@@ -213,11 +217,11 @@ var aboutModule = (() => {
 		const carouselContainer = document.getElementById("instagram-carousel");
 		payload.data.forEach(payloadObject => {
 			const imageUrl = payloadObject.images.standard_resolution.url;
-			const link = (payloadObject.link)
+			const link = payloadObject.link;
 			let newMember = createCarouselMember(imageUrl, link);
-			carouselContainer.appendChild(newMember)
+			carouselContainer.appendChild(newMember);
 		});
-		const elems = document.querySelectorAll('.carousel');
+		const elems = document.querySelectorAll(".carousel");
 		M.Carousel.init(elems, {
 			// onCycleTo: updateCarouselInfo,
 			numVisible: 5,
@@ -228,7 +232,7 @@ var aboutModule = (() => {
 
 	function updateCarouselInfo(currentSelection) {
 		const descriptionPlaceholder = document.getElementById("instagram-description");
-		descriptionPlaceholder.textContent = currentSelection.childNodes[0].getAttribute("data-desc")
+		descriptionPlaceholder.textContent = currentSelection.childNodes[0].getAttribute("data-desc");
 	}
 
 	function createCarouselMember(imageUrl, link) {
