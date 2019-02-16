@@ -64,9 +64,6 @@
   }
 } 
 
-
-
-
 .gallery {
   margin: 0 auto;
 }
@@ -78,8 +75,6 @@
 }
 
 /* ---- grid-item ---- */
-
-
 
 .ting {
   margin-top: 20px;
@@ -103,9 +98,11 @@
   color: black;
 }
 
-#instagram-carousel {
+#instagram-carousel>a img{
   margin-top: -80px;
-  margin-bottom: -25px;
+}
+#instagram-carousel{
+  margin-bottom: -50px;
 }
 
 #footer-row {
@@ -114,5 +111,6 @@
 
 .social-media-sm {
   height: 16px;
-  text-align: right;
+  float: right;
+  margin-left: 10px;
 }

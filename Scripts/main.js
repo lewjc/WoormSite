@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /* ============ MAIN MODULE ============== */
-
 var mainModule = (() => {
 	function siteInit() {
 		const cookie = getCookie("navOption");
@@ -47,7 +46,6 @@ var mainModule = (() => {
 })();
 
 /* ============ NAVIGATION MODULE ============== */
-
 var navModule = (() => {
 	const _navOptions = {
 		Portfolio: {
@@ -172,7 +170,6 @@ var navModule = (() => {
 })();
 
 /* ============ PORTFOLIO MODULE ============== */
-
 var portfolioModule = (() => {
 	/**
 	 * Call this once the portfolio file has been loaded.
@@ -219,7 +216,7 @@ var aboutModule = (() => {
 				const accessToken = data.access_token;
 				url += accessToken;
 				url += "&count=20";
-				return fetch(url);
+				return fetchJsonp(url);
 			})
 			.then(response => {
 				return response.json();
@@ -250,6 +247,7 @@ var aboutModule = (() => {
 		carouselMember.setAttribute("href", link);
 		const image = document.createElement("img");
 		image.setAttribute("src", imageUrl);
+		image.setAttribute("alt", "loading");
 		carouselMember.appendChild(image);
 		return carouselMember;
 	}
