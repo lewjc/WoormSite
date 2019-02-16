@@ -114,3 +114,10 @@
   float: right;
   margin-left: 10px;
 }
+
+.progress{
+  background-color: #efa2c9;
+}
+.progress .indeterminate{
+  background-color: #de6ca7
+}
