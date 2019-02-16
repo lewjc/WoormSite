@@ -117,14 +117,6 @@ var navModule = (() => {
 		);
 	}
 
-	function burgerMenuEvents() {
-		let _isOpen = false;
-		const burgerMenu = document.getElementById("burger-menu");
-		burgerMenu.addEventListener("click", () => {
-			// We need to show the menu for the user to navigate.
-		});
-	}
-
 	function navChangeClick(button, fileLink, buttonId, pageLoadCallback) {
 		// Here we are setting the loader.
 		mainModule.showLoader();
@@ -171,28 +163,43 @@ var navModule = (() => {
 
 /* ============ PORTFOLIO MODULE ============== */
 var portfolioModule = (() => {
+	let _portfolioImageNumber;
+	let _imagesLoaded;
 	/**
 	 * Call this once the portfolio file has been loaded.
 	 *
 	 */
 	function init() {
+		_imagesLoaded = 0;
+		const allImages = document.getElementById("page-content").querySelectorAll("img");
+		_portfolioImageNumber = allImages.length;
+		allImages.forEach(image => {
+			image.addEventListener("load", imageLoaded);
+		});
+	}
+
+	function imageLoaded() {
+		_imagesLoaded++;
+		if (_imagesLoaded === _portfolioImageNumber) {
+			allImagesLoaded();
+		}
+	}
+
+	function allImagesLoaded() {
 		const elems = document.querySelectorAll(".materialboxed");
 		M.Materialbox.init(elems),
 			{
-			  inDuration: 0
+				inDuration: 0
 			};
 		// init with element
-		setTimeout(() => {
-			const gallery = document.querySelector(".gallery");
-			const msnry = new Masonry(gallery, {
-				itemSelector: ".grid-item",
-				fitWidth: true,
-				gutter: 10
-			});
-			msnry.on("layoutComplete", mainModule.hideLoader);
-			msnry.layout();
-		}, 500);
-		// here is where we hide the selector
+		const gallery = document.querySelector(".gallery");
+		const msnry = new Masonry(gallery, {
+			itemSelector: ".grid-item",
+			fitWidth: true,
+			gutter: 10
+		});
+		msnry.on("layoutComplete", mainModule.hideLoader);
+		msnry.layout();
 	}
 
 	return {
