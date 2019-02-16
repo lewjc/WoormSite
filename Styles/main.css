@@ -34,7 +34,7 @@
   } */
 
   .grid-item--width2 {
-    width: 90px;
+    width: 290px;
   }
 
   #footer {
@@ -46,7 +46,26 @@
   #burger-menu-container {
     display: none;
   }
+  .grid-item--width2 {
+    width: 270px;
+  }
 }
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .grid-item--width2 {
+    width: 240px;
+  }
+} 
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .grid-item--width2 {
+    width: 230px;
+  }
+} 
+
+
+
 
 .gallery {
   margin: 0 auto;
@@ -60,9 +79,7 @@
 
 /* ---- grid-item ---- */
 
-.grid-item--width2 {
-  width: 350px;
-}
+
 
 .ting {
   margin-top: 20px;
@@ -96,5 +113,6 @@
 }
 
 .social-media-sm {
-  height: 24px;
+  height: 16px;
+  text-align: right;
 }

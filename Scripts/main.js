@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
 	navModule.init();
 	mainModule.siteInit();
 });
@@ -61,6 +61,10 @@ var navModule = (() => {
 		Contact: {
 			buttonId: "#contact-btn",
 			link: "../Pages/contact.html"
+		},
+		Instagram: {
+			buttonId: "#instagram-btn",
+			link: "../Pages/instagram.html"
 		}
 	};
 
@@ -97,7 +101,7 @@ var navModule = (() => {
 		const aboutButtons = document.querySelectorAll("#about-btn");
 		aboutButtons.forEach(button =>
 			button.addEventListener("click", () =>
-				navChangeClick(button, _navOptions.About.link, _navOptions.About.buttonId, aboutModule.init)
+				navChangeClick(button, _navOptions.About.link, _navOptions.About.buttonId)
 			)
 		);
 
@@ -105,6 +109,12 @@ var navModule = (() => {
 		contactButtons.forEach(button =>
 			button.addEventListener("click", () =>
 				navChangeClick(button, _navOptions.Contact.link, _navOptions.Contact.buttonId)
+			)
+		);
+		const instagramButtons = document.querySelectorAll("#instagram-btn");
+		instagramButtons.forEach(button =>
+			button.addEventListener("click", () =>
+				navChangeClick(button, _navOptions.Instagram.link, _navOptions.Instagram.buttonId, aboutModule.init)
 			)
 		);
 	}
@@ -134,7 +144,7 @@ var navModule = (() => {
 	function loadMainContent(contentName, pageLoadCallback) {
 		var request = new XMLHttpRequest();
 		request.open("GET", `../Pages/${contentName}`, true);
-		request.onload = function() {
+		request.onload = function () {
 			let pageLoad = new Promise((resolve, reject) => {
 				if (request.status >= 200 && request.status < 400) {
 					var resp = request.responseText;
@@ -172,7 +182,7 @@ var portfolioModule = (() => {
 		const elems = document.querySelectorAll(".materialboxed");
 		M.Materialbox.init(elems),
 			{
-				inDuration: 100
+			  inDuration: 0
 			};
 		// init with element
 		setTimeout(() => {
@@ -196,11 +206,15 @@ var portfolioModule = (() => {
 /* ============ ABOUT MODULE ============== */
 var aboutModule = (() => {
 	async function init() {
-		const payload = await fetch("./Site/info.json")
+		const payload = await fetch("./Site/info.json", {
+			mode: "cors",
+			headers: {
+				'Access-Control-Allow-Origin': '*'
+			}
+		})
 			.then(siteInfo => {
 				return siteInfo.json();
-			})
-			.then(data => {
+			}).then(data => {
 				let url = data.instagram_api_url;
 				const accessToken = data.access_token;
 				url += accessToken;
@@ -230,11 +244,6 @@ var aboutModule = (() => {
 		mainModule.hideLoader();
 	}
 
-	function updateCarouselInfo(currentSelection) {
-		const descriptionPlaceholder = document.getElementById("instagram-description");
-		descriptionPlaceholder.textContent = currentSelection.childNodes[0].getAttribute("data-desc");
-	}
-
 	function createCarouselMember(imageUrl, link) {
 		const carouselMember = document.createElement("a");
 		carouselMember.classList.add("carousel-item");
@@ -249,3 +258,5 @@ var aboutModule = (() => {
 		init
 	};
 })();
+
+
