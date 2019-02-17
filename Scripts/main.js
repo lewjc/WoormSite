@@ -12,7 +12,7 @@ var mainModule = (() => {
 			const previousButtonId = cookie.split("=")[1];
 			document.querySelector(previousButtonId).click();
 		} else {
-			document.getElementById("portfolio-btn").click();
+			document.getElementById("about-btn").click();
 		}
 	}
 
@@ -30,14 +30,14 @@ var mainModule = (() => {
 	}
 
 	function hideLoader() {
-		const loaderPlaceholder = document.getElementById("loader-placeholder");
-		loaderPlaceholder.setAttribute("hidden", "hidden");
+		document.getElementById("loader-placeholder").setAttribute("hidden", "hidden");
 	}
 
 	function showLoader() {
-		const loaderPlaceholder = document.getElementById("loader-placeholder");
-		loaderPlaceholder.removeAttribute("hidden");
+		document.getElementById("loader-placeholder").removeAttribute("hidden");
+
 	}
+
 	return {
 		siteInit,
 		hideLoader,
@@ -106,7 +106,7 @@ var navModule = (() => {
 		const contactButtons = document.querySelectorAll("#contact-btn");
 		contactButtons.forEach(button =>
 			button.addEventListener("click", () =>
-				navChangeClick(button, _navOptions.Contact.link, _navOptions.Contact.buttonId)
+				navChangeClick(button, _navOptions.Contact.link, _navOptions.Contact.buttonId, contactModule.init)
 			)
 		);
 		const instagramButtons = document.querySelectorAll("#instagram-btn");
@@ -118,17 +118,16 @@ var navModule = (() => {
 	}
 
 	function navChangeClick(button, fileLink, buttonId, pageLoadCallback) {
-		// Here we are setting the loader.
+		if (_currentSelection) {
+			_currentSelection.classList.remove("nav-selected");
+		}
+		button.classList.add("nav-selected");
 		mainModule.showLoader();
 		document.cookie = "navOption=" + buttonId;
 		setTimeout(() => {
-			if (_currentSelection) {
-				_currentSelection.classList.remove("nav-selected");
-			}
 			_currentSelection = button;
-			button.classList.add("nav-selected");
 			loadMainContent(fileLink, pageLoadCallback);
-		}, 250);
+		}, 50);
 	}
 
 	function loadMainContent(contentName, pageLoadCallback) {
@@ -150,6 +149,9 @@ var navModule = (() => {
 				} else {
 					mainModule.hideLoader();
 				}
+			}).catch(error => {
+				console.log("Error");
+				console.log(error);
 			});
 		};
 
@@ -180,6 +182,7 @@ var portfolioModule = (() => {
 
 	function imageLoaded() {
 		_imagesLoaded++;
+		console.log(_imagesLoaded);
 		if (_imagesLoaded === _portfolioImageNumber) {
 			allImagesLoaded();
 		}
@@ -198,8 +201,9 @@ var portfolioModule = (() => {
 			fitWidth: true,
 			gutter: 10
 		});
-		msnry.on("layoutComplete", mainModule.hideLoader);
+		// msnry.on("layoutComplete", mainModule.hideLoader);
 		msnry.layout();
+		mainModule.hideLoader();
 	}
 
 	return {
@@ -210,23 +214,20 @@ var portfolioModule = (() => {
 /* ============ ABOUT MODULE ============== */
 var aboutModule = (() => {
 	async function init() {
-		const payload = await fetch("./Site/info.json", {
-			mode: "cors",
-			headers: {
-				'Access-Control-Allow-Origin': '*'
-			}
-		})
-			.then(siteInfo => {
-				return siteInfo.json();
-			}).then(data => {
-				let url = data.instagram_api_url;
-				const accessToken = data.access_token;
-				url += accessToken;
-				url += "&count=20";
-				return fetchJsonp(url);
-			})
-			.then(response => {
+		const payload = await fetch("./Site/info.json").then(siteInfo => {
+			return siteInfo.json();
+		}).then(data => {
+			let url = data.instagram_api_url;
+			const accessToken = data.access_token;
+			url += accessToken;
+			url += "&count=20";
+			return fetchJsonp(url);
+		}).then(response => {
 				return response.json();
+			}).catch(error => {
+				// Error loading the instagram images.
+				console.log(error);
+				// Show snackbar -> instagram could not be loaded.
 			});
 		initInstagramCarousel(payload);
 	}
@@ -243,7 +244,8 @@ var aboutModule = (() => {
 		M.Carousel.init(elems, {
 			// onCycleTo: updateCarouselInfo,
 			numVisible: 5,
-			indicators: true
+			indicators: false,
+			dist: -120
 		});
 		mainModule.hideLoader();
 	}
@@ -264,4 +266,14 @@ var aboutModule = (() => {
 	};
 })();
 
+var contactModule = (function () {
 
+	function init() {
+		var elems = document.querySelectorAll('.tooltipped');
+		var instances = M.Tooltip.init(elems, {
+			outDuration: 100
+		});
+		mainModule.hideLoader();
+	}
+	return { init };
+})();

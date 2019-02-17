@@ -1,5 +1,5 @@
 * {
-  font-family: 'Archivo', sans-serif;
+  font-family: 'Roboto-Condensed', sans-serif;
 }
 
 #header-image {
@@ -98,15 +98,13 @@
   color: black;
 }
 
-#instagram-carousel>a img{
-  margin-top: -80px;
-}
 #instagram-carousel{
-  margin-bottom: -50px;
+  height: 300px;
 }
 
 #footer-row {
   margin-top: 10px;
+  font-size: smaller;
 }
 
 .social-media-sm {
@@ -116,8 +114,40 @@
 }
 
 .progress{
-  background-color: #efa2c9;
+  /* background-color: #efa2c9; */
+  background-color: #6eb8f4;
 }
 .progress .indeterminate{
-  background-color: #de6ca7
+  /* background-color: #de6ca7; */
+  background-color: #0832a4;
 }
+
+#contact-icons{
+  font-size: -webkit-xxx-large;
+}
+#contact-icons > a{
+  color: #000000; 
+}
+
+#contact-icons > a:hover{
+  color: #b1b1b1; 
+}
+
+
+.material-tooltip{
+  background-color: #0b42a5;
+}
+
+
+#shop-link >a{
+  text-decoration: underline;
+  color: black;
+  font-weight: 600;
+}
+
+#shop-link >a:hover{
+  color:#b1b1b1;
+}
+
+
+
