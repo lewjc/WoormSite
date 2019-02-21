@@ -12,7 +12,7 @@ var mainModule = (() => {
 			const previousButtonId = cookie.split("=")[1];
 			document.querySelector(previousButtonId).click();
 		} else {
-			document.getElementById("about-btn").click();
+			document.getElementById("portfolio-btn").click();
 		}
 	}
 
@@ -173,11 +173,18 @@ var portfolioModule = (() => {
 	 */
 	function init() {
 		_imagesLoaded = 0;
-		const allImages = document.getElementById("page-content").querySelectorAll("img");
+		const allImages = document.getElementById("page-content");
 		_portfolioImageNumber = allImages.length;
-		allImages.forEach(image => {
-			image.addEventListener("load", imageLoaded);
-		});
+		const gallery = document.querySelector(".gallery");
+		imagesLoaded( gallery, () =>{
+			const msnry = new Masonry(gallery, {
+				itemSelector: ".grid-item",
+				fitWidth: true,
+				gutter: 10
+			});
+			mainModule.hideLoader();
+		} );
+		// init with element
 	}
 
 	function imageLoaded() {
@@ -194,16 +201,7 @@ var portfolioModule = (() => {
 			{
 				inDuration: 0
 			};
-		// init with element
-		const gallery = document.querySelector(".gallery");
-		const msnry = new Masonry(gallery, {
-			itemSelector: ".grid-item",
-			fitWidth: true,
-			gutter: 10
-		});
-		// msnry.on("layoutComplete", mainModule.hideLoader);
-		msnry.layout();
-		mainModule.hideLoader();
+
 	}
 
 	return {
@@ -223,12 +221,12 @@ var aboutModule = (() => {
 			url += "&count=20";
 			return fetchJsonp(url);
 		}).then(response => {
-				return response.json();
-			}).catch(error => {
-				// Error loading the instagram images.
-				console.log(error);
-				// Show snackbar -> instagram could not be loaded.
-			});
+			return response.json();
+		}).catch(error => {
+			// Error loading the instagram images.
+			console.log(error);
+			// Show snackbar -> instagram could not be loaded.
+		});
 		initInstagramCarousel(payload);
 	}
 

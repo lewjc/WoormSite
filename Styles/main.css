@@ -6,6 +6,10 @@
   margin-top: 2%;
 }
 
+#title-image{
+  height: 100px;
+}
+
 #portfolio-btn {
   width: 70%;
 }
@@ -14,15 +18,22 @@
   color: #a5a5a5;
   font-weight: 700;
 }
+#nav-button-row>div>a :hover{
+ color: black;
+}
 
 #nav-button-row>div>a>h6 {
   font-size: 1.25rem
+}
+#nav-button-row{
+  margin-bottom: 10px;
 }
 
 .nav-selected>h6 {
   color: black;
   text-decoration: underline;
 }
+
 
 @media screen and (min-width: 320px) and (max-width: 480px) {
   #burger-menu-container {
