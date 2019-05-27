@@ -1,10 +1,15 @@
 var lazyLoadInstance = new LazyLoad({
-    elements_selector: ".lazy"
+	elements_selector: ".lazy"
 });
 
-
+function lazyLoadRefresh() {
+	if (lazyLoadInstance) {
+		lazyLoadInstance.update();
+	}
+}
 
 document.addEventListener("DOMContentLoaded", function () {
+	document.addEventListener("scroll", lazyLoadRefresh)
 	navModule.init();
 	mainModule.siteInit();
 });
@@ -182,14 +187,12 @@ var portfolioModule = (() => {
 		const allImages = document.getElementById("page-content");
 		_portfolioImageNumber = allImages.length;
 		const gallery = document.querySelector(".gallery");
-		imagesLoaded( gallery, () =>{
-			const msnry = new Masonry(gallery, {
-				itemSelector: ".grid-item",
-				fitWidth: true,
-				gutter: 10
-			});
-			mainModule.hideLoader();
-		} );
+		const msnry = new Masonry(gallery, {
+			itemSelector: ".grid-item",
+			fitWidth: true,
+			gutter: 10
+		});
+		mainModule.hideLoader();
 		// init with element
 	}
 
@@ -199,15 +202,6 @@ var portfolioModule = (() => {
 		if (_imagesLoaded === _portfolioImageNumber) {
 			allImagesLoaded();
 		}
-	}
-
-	function allImagesLoaded() {
-		const elems = document.querySelectorAll(".materialboxed");
-		M.Materialbox.init(elems),
-			{
-				inDuration: 0
-			};
-
 	}
 
 	return {
@@ -279,5 +273,7 @@ var contactModule = (function () {
 		});
 		mainModule.hideLoader();
 	}
-	return { init };
+	return {
+		init
+	};
 })();

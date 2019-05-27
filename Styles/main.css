@@ -7,7 +7,7 @@
   margin-top: 2%;
 }
 
-#title-image{
+#title-image {
   height: 100px;
 }
 
@@ -19,14 +19,16 @@
   color: #a5a5a5;
   font-weight: 700;
 }
-#nav-button-row>div>a :hover{
- color: black;
+
+#nav-button-row>div>a :hover {
+  color: black;
 }
 
 #nav-button-row>div>a>h6 {
   font-size: 1.25rem
 }
-#nav-button-row{
+
+#nav-button-row {
   margin-bottom: 10px;
 }
 
@@ -57,23 +59,25 @@
   #burger-menu-container {
     display: none;
   }
+
   .grid-item--width2 {
     width: 270px;
   }
 }
+
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
   .grid-item--width2 {
     width: 240px;
   }
-} 
+}
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
   .grid-item--width2 {
     width: 230px;
   }
-} 
+}
 
 .gallery {
   margin: 0 auto;
@@ -85,16 +89,40 @@
   clear: both;
 }
 
-/* ---- grid-item ---- */
-
-.ting {
-  margin-top: 20px;
-  padding: 5px; 
+.thumbnail-container>img:not([src]):not([srcset]) {
+  visibility: hidden;
 }
 
-.ting> img{
+.thumbnail-container>img:not(.initial) {
+  transition: opacity 1s;
+}
+
+.thumbnail-container>img.initial,
+.thumbnail-container>img.loaded,
+.thumbnail-container>img.error {
+  opacity: 1;
+}
+
+/* ---- grid-item ---- */
+
+.thumbnail-container {
+  margin-top: 20px;
+  padding: 10px;
+  border: 2px solid #ddd;
+  width: 250px;
+  height: 250px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.thumbnail-container>img {
   vertical-align: middle;
-  object-fit: cover;
+  max-height: -moz-available;
+  /* WebKit-based browsers will ignore this. */
+  max-height: -webkit-fill-available;
+  /* Mozilla-based browsers will ignore this. */
+  max-height: fill-available;
+  max-height: 100%;
 }
 
 #menu-dropdown {
@@ -115,7 +143,7 @@
   color: black;
 }
 
-#instagram-carousel{
+#instagram-carousel {
   height: 300px;
 }
 
@@ -130,41 +158,40 @@
   margin-left: 10px;
 }
 
-.progress{
+.progress {
   /* background-color: #efa2c9; */
   background-color: #6eb8f4;
 }
-.progress .indeterminate{
+
+.progress .indeterminate {
   /* background-color: #de6ca7; */
   background-color: #0832a4;
 }
 
-#contact-icons{
+#contact-icons {
   font-size: -webkit-xxx-large;
 }
-#contact-icons > a{
-  color: #000000; 
+
+#contact-icons>a {
+  color: #000000;
 }
 
-#contact-icons > a:hover{
-  color: #b1b1b1; 
+#contact-icons>a:hover {
+  color: #b1b1b1;
 }
 
 
-.material-tooltip{
+.material-tooltip {
   background-color: #0b42a5;
 }
 
 
-#shop-link >a{
+#shop-link>a {
   text-decoration: underline;
   color: black;
   font-weight: 600;
 }
 
-#shop-link >a:hover{
-  color:#b1b1b1;
+#shop-link>a:hover {
+  color: #b1b1b1;
 }
-
-
-
