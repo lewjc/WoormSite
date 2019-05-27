@@ -1,3 +1,9 @@
+var lazyLoadInstance = new LazyLoad({
+    elements_selector: ".lazy"
+});
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
 	navModule.init();
 	mainModule.siteInit();
@@ -122,7 +128,7 @@ var navModule = (() => {
 			_currentSelection.classList.remove("nav-selected");
 		}
 		button.classList.add("nav-selected");
-		mainModule.showLoader();
+		// mainModule.showLoader();
 		document.cookie = "navOption=" + buttonId;
 		setTimeout(() => {
 			_currentSelection = button;

@@ -14,6 +14,7 @@
     crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
 </head>
+
 <body>
   <div class="header">
     <div class="container">
@@ -72,7 +73,8 @@
       <div class="col s12">
         <div class="row">
           <div class="center-align">
-            &copy; 2019 Lewis Cummins | <span id="shop-link" class="center-align"><a href="https://www.wooorm.co.uk/">Shop Artwork</a></span>
+            &copy; 2019 Lewis Cummins | <span id="shop-link" class="center-align"><a href="https://www.wooorm.co.uk/">Shop
+                Artwork</a></span>
             <a href="https://www.instagram.com/wooorm/">
               <img class="social-media-sm" src="./Images/social-1_logo-instagram.svg" />
             </a>
@@ -86,9 +88,15 @@
   </div>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@12.0.0/dist/lazyload.min.js"></script>
   <script src="./Scripts/fetch-jsonp-1.1.2/build/fetch-jsonp.js"></script>
   <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
   <script src="./Scripts/main.js"></script>
+  <script>
+    if (lazyLoadInstance) {
+      lazyLoadInstance.update();
+    }
+  </script>
 </body>
 
 </html>

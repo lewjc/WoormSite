@@ -2,6 +2,7 @@
   font-family: 'Roboto-Condensed', sans-serif;
 }
 
+
 #header-image {
   margin-top: 2%;
 }
@@ -33,7 +34,6 @@
   color: black;
   text-decoration: underline;
 }
-
 
 @media screen and (min-width: 320px) and (max-width: 480px) {
   #burger-menu-container {
@@ -89,6 +89,12 @@
 
 .ting {
   margin-top: 20px;
+  padding: 5px; 
+}
+
+.ting> img{
+  vertical-align: middle;
+  object-fit: cover;
 }
 
 #menu-dropdown {
